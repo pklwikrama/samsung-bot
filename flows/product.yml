@@ -37,7 +37,7 @@ action:
 
             - title: Galaxy Note
               text: Galaxy Note
-              thumbnailImageUrl: ''
+              thumbnailImageUrl: 'image.samsung.com/us/smartphones/galaxy-s9/phone-pcd/0216-C2-2-GalaxyNote-PhonesPCD.jpg'
               actions:
                   - 
                     type: postback

@@ -1,6 +1,12 @@
-Intents:
-  askLocation:
+intents:
+  giveLocation:
     initial: true
     type: text
     classifier:
-      nlu: 
+      nlu: askLocation      
+
+states:
+  AskLocation:
+    initial: true
+    
+  
