@@ -1,0 +1,71 @@
+product:
+    active: true
+    intents:
+        productChoosen:
+            type: data
+            initial: true
+            fallback: false
+            classifier:
+                nlu: askProduct
+states:
+    showProduct:
+        action:
+            - name: productOption
+            - name: askOption
+        transition:
+            productDetail:
+                condition: 'intent == "productChosen"'
+            showProduct:
+                fallback: true
+
+action:
+    productOption:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy S
+              text: Galaxy S
+              thumbnailImageUrl: 'image.samsung.com/us/smartphones/galaxy-s9/phone-pcd/0216-C2-1-GalaxyS-PhonesPCD.jpg'
+              actions:
+                  - 
+                    type: postback
+                    label: galaxy s
+                    payload:
+                        type: product
+                        product: Galaxy S
+
+            - title: Galaxy Note
+              text: Galaxy Note
+              thumbnailImageUrl: ''
+              actions:
+                  - 
+                    type: postback
+                    label: galaxy note
+                    payload:
+                        type: product
+                        product: Galaxy Note
+
+            - title: Galaxy J
+              text: Galaxy J
+              thumbnailImageUrl: ''
+              actions:
+                  - 
+                    type: postback
+                    label: galaxy j
+                    payload:
+                        type: product
+                        product: Galaxy J
+
+            - title: Galaxy A
+              text: Galaxy S
+              thumbnailImageUrl: ''
+              actions:
+                  - 
+                    type: postback
+                    label: galaxy s
+                    payload:
+                        type: product
+                        product: Galaxy S
+
+

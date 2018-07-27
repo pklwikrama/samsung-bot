@@ -1,0 +1,17 @@
+name: Samsung-bot
+desc: Khusus user premium samsung
+timezone: 7
+flows:
+    fallback: $include(./flows/fallback.yml)
+    product: $include(./flows/product.yml)
+    faq: $include(./flows/faq.yml)
+    location: $include(./flows/location.yml)
+    register: $include(./flows/comparison.yml)
+    
+nlus: $include(./nlus.yml)
+# methods: {}
+# config: {}
+version: 0.0.1
+id:
+tag: null
+

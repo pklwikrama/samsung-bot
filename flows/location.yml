@@ -1,0 +1,6 @@
+Intents:
+  askLocation:
+    initial: true
+    type: text
+    classifier:
+      nlu: 

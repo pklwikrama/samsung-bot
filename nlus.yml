@@ -1,0 +1,62 @@
+greetings:
+  type: keyword
+  options:
+      keywords:
+          greet:
+              - hi
+              - hello
+              - hai
+              - halo
+              - hallo
+              - helo
+              - hei
+              - hay
+              - hey
+              - hoy
+              - hays
+              - heys
+              - Pagi
+              - Siang
+              - Malem
+              
+comparison:
+  type: nl
+  options:
+      nluId: 'Samsung-Bot:Samsung-comparison-NLU'
+      token: 
+      output: value
+      flatten: true
+
+
+askLocation:
+  type: keyword
+  option:
+    keyword:
+        Bogor:
+            - bogor
+            - bgr
+            - kota hujan
+        Tangerang:
+            - tangerang
+            - tanggerang
+            - tngrng
+            - tngrang
+
+askProduct:
+  type: keyword
+  option:
+    keyword:
+          Samsung Galaxy S:
+              - galaxy s
+              - galaxyS
+              - glx s
+              -galaksi s
+              
+          Samsung Galaxy Note:
+              - samsung note
+
+          Samsung Galaxy J:
+              - samsung j
+          
+          Samsung Galaxy A:
+              - samsung galaxt a

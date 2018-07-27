@@ -1,0 +1,40 @@
+active: true
+fallback: true
+intents:
+    intentSayHi:
+        type: text
+        initial: true
+        fallback: false
+        classifier:
+            nlu: greetings
+            match: greet
+    fallbackintent:
+        type: text
+        initial: false
+        fallback: true
+states:
+    init:
+        transitions:
+            sayHi:
+                condition: 'intent == "intentSayHi"'
+            fallback:
+                fallback: true
+        initial: true
+    sayHi:
+        action: sayHi
+        transitions: {}
+        end: true
+    fallback:
+        action: fallback
+        transitions: {}
+        end: true
+actions:
+    sayHi:
+        type: text
+        options:
+            text: 'Hai! Selamat datang di Samsung store premium, ada yang bisa saya bantu ?'
+    fallback:
+        type: text
+        options:
+            text: 'Maaf saya tidak mengerti maksud anda'
+methods: {}
