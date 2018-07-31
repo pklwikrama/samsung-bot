@@ -1,16 +1,22 @@
 product:
 active: true
 intents:
-    toProduct:
-        initial: true
-        type: command
-        condition: "content == 'toProduct'"
-    askProduct:
-        type: data
-        initial: true
-        fallback: false
-        classifier:
-            nlu: askProduct
+    
+    # productChosen:
+    #     type: data
+    #     initial: true
+    #     fallback: false
+    #     condition: 'payload.type == "product"'
+    # productInfo:
+    #     type: data
+    #     initial: true
+    #     fallback: false
+    #     condition: 'payload.type == "productInfo"'
+    # productDetail:
+    #     type: data
+    #     initial: true
+    #     fallback: false
+    #     condition: 'payload.type == "productDetail"'
     
 states:
     showProduct:
@@ -18,22 +24,171 @@ states:
             - name: productOption
             - name: askOption
         transition:
-            productDetail:
-                condition: 'payload.type = "product"'
+            galaxy_s:
+                condition: 'payload.type = "galaxy_s"'
+            galaxy_j:
+                condition: 'payload.type = "galaxy_j"'
+            galaxy_note:
+                condition: 'payload.type = "galaxy_note"'
+            galaxy_a:
+                condition: 'payload.type = "galaxy_a"'
             showProduct:
                 fallback: true
     
-    productDetail:
+    galaxy_j:
         action:
-            - name: showDetail
-            - name: toProduct
+            - name: showJSeries
+            - name: askInfo
         transition: 
-            productInfo: 'payload.type = "productDetail"'
-            productDetail:
+            infoJ2: 
+                condition: 'payload.type = "j2"'
+            infoJ5: 
+                condition: 'payload.type = "j5"'
+            infoJ7: 
+                condition: 'payload.type = "j7"'
+            galaxy_j:
                 fallback: true
+    
+    galaxy_s:
+        action:
+            - name: showSSeries
+            - name: askInfo
+        transition: 
+            infoS7: 
+                condition: 'payload.type = "s7"'
+            infoS9: 
+                condition: 'payload.type = "s9"'
+            infoS9Plus: 
+                condition: 'payload.type = "s9plus"'
+            galaxy_s:
+                fallback: true
+
+    galaxy_note:
+        action:
+            - name: showNoteSeries
+            - name: askInfo
+        transition: 
+            infoNote5: 
+                condition: 'payload.type = "note5"'
+            infoNote7: 
+                condition: 'payload.type = "note7"'
+            infoNote8: 
+                condition: 'payload.type = "note8"'
+            galaxy_note:
+                fallback: true
+
+    galaxy_a:
+        action:
+            - name: showASeries
+            - name: askInfo
+        transition: 
+            infoNote: 
+                condition: 'payload.type = "a5"'
+            infoJ5: 
+                condition: 'payload.type = "a7"'
+            infoJ7: 
+                condition: 'payload.type = "a8"'
+            galaxy_a:
+                fallback: true
+
+    infoS7:
+        action:
+            - name: showS7
+            - name: done
+            - name: backToMenu
+        end: true
+    infoS9:
+        action:
+            - name: showS9
+            - name: done
+            - name: backToMenu
+        end: true
+    infoS9plus:
+        action:
+            - name: showS9Plus
+            - name: done
+            - name: backToMenu
+        end: true
+    infoJ7:
+        action:
+            - name: showJ7
+            - name: done
+            - name: backToMenu
+        end: true
+    infoJ2:
+        action:
+            - name: showJ2
+            - name: done
+            - name: backToMenu
+        end: true
+    infoJ5:
+        action:
+            - name: showJ5
+            - name: done
+            - name: backToMenu
+        end: true
+    infoA5:
+        action:
+            - name: showA5
+            - name: done
+            - name: backToMenu
+        end: true
+    infoA7:
+        action:
+            - name: showA7
+            - name: done
+            - name: backToMenu
+        end: true
+    infoA8:
+        action:
+            - name: showS8
+            - name: done
+            - name: backToMenu
+        end: true
+    infoNote5:
+        action:
+            - name: showNote5
+            - name: done
+            - name: backToMenu
+        end: true
+    infoNote7:
+        action:
+            - name: showNote7
+            - name: done
+            - name: backToMenu
+        end: true
+    infoNote8:
+        action:
+            - name: showNote8
+            - name: done
+            - name: backToMenu
+        end: true
+        
+
+    # productDetail:
+    #     action:
+    #         - name: showSSeries
+    #             condition: "payload.type = galaxy_s"
+    #         - name: showJSeries
+    #             condition: "payload.type = galaxy_j"
+    #         - name: showNoteSeries
+    #             condition: "payload.type = galaxy_note"
+    #         - name: showASeries
+    #             condition: "payload.type = galaxy_a"
+    #         - name: done
+    #             condition: "payload.type = galaxy_a || payload.type = galaxy_s || payload.type = galaxy_j || payload.type = galaxy_note"
+
             
 
 action:
+    done:
+        type: text
+        text: Berikut adalah spesifikasi dari samsung $(payload.type).
+    
+    backToMenu:
+        type: command
+        option:
+            command: backToMenu
     askOption:
         type: text
         text: "Silahkan klik produk yang ingin anda lihat detailnya."
@@ -50,8 +205,8 @@ action:
                     type: postback
                     label: galaxy s
                     payload:
-                        type: product
-                        product: Galaxy S
+                        type: galaxy_s
+                        
 
             - title: Galaxy Note
               text: Galaxy Note
@@ -61,8 +216,7 @@ action:
                     type: postback
                     label: galaxy note
                     payload:
-                        type: product
-                        product: Galaxy Note
+                        type: galaxy_note
 
             - title: Galaxy A
               text: galaxy a
@@ -72,8 +226,7 @@ action:
                     type: postback
                     label: galaxy a
                     payload:
-                        type: product
-                        product: Galaxy A
+                        type: galaxy_a
 
             - title: Galaxy J
               text: galaxy j
@@ -83,52 +236,223 @@ action:
                     type: postback
                     label: galaxy j
                     payload:
-                        type: product
-                        product: Galaxy J
-    showDetailS:
+                        type: galaxy_j
+    showS9:
       type: template
       option:
         type: carousel
         items:
             - title: Galaxy S9
-              text: Galaxy S9
-              thumbnailImageUrl: ''
+              text: 'Main Display Resolution : 2960 x 1440 (Quad HD+)
+                    Camera resolution (Front): 8MP AF (F1.7)
+                    Camera resolution (Rear) : 12MP OIS (F1.5/F2.4)
+                    Internal Memory          : 4GB RAM / 256GB Storage
+                    Video Recording Resolution: UHD 4K (3840 x 2160)@60fps'
+              thumbnailImageUrl: 'https://www.vodafone.co.uk/cs/groups/public/documents/images/vfcon088401.jpg'
               actions:
                   - 
                     type: postback
                     label: Galaxy S9
                     payload:
-                        type: product
-                        product: Galaxy S9
-
+                        type: s9
+    showS9plus:
+      type: template
+      option:
+        type: carousel
+        items:
             - title: Galaxy S9+
-              text: Galaxy S9+
-              thumbnailImageUrl: ''
+              text: 'OS : Android O (8.0)
+                    Battery Type and Size :3,500 mAh
+                    Water-resistant : Yes
+                    Wireless Charging Capability : Yes
+                    Camera resolution (Front): 8MP AF (F1.7)
+                    Camera resolution (Rear) : 12MP OIS (F1.5/F2.4)
+                    Internal Memory          : 4GB RAM / 256GB Storage'
+              thumbnailImageUrl: 'https://i.gadgets360cdn.com/products/large/1519585112_635_samsung_galaxy_s9_plus_grey.jpg'
               actions:
                   - 
                     type: postback
                     label: Galaxy S9+
                     payload:
-                        type: product
-                        product: Galaxy S9+
+                        type: s9plus
 
+    showS7:
+      type: template
+      option:
+        type: carousel
+        items:
             - title: Galaxy S7 Edge
               text: Galaxy S7 Edge
-              thumbnailImageUrl: ''
+              thumbnailImageUrl: 'https://images.samsung.com/is/image/samsung/id-galaxy-s7-black-128gb-sm-g935ftkdxid-front-black-mist-thumb-61272217?$PF_PRD_PNG$'
               actions:
                   - 
                     type: postback
                     label: Galaxy S7 Edge
                     payload:
-                        type: product
-                        product: Galaxy S7 Edge
-        
-    done:
-        type: text
-        options:
-            text: "Berikut spesifikasi dari handphone ${payload.type} :"
-    toFallback: 
-        type: command
-        options:
-            command: toFallback
+                        type: s7
+    
+    #showJ
+    showJ2:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy J2
+              text: 'Main Display Resolution : 2960 x 1440 (Quad HD+)
+                    Camera resolution (Front): 8MP AF (F1.7)
+                    Camera resolution (Rear) : 12MP OIS (F1.5/F2.4)
+                    Internal Memory          : 4GB RAM / 256GB Storage
+                    Video Recording Resolution: UHD 4K (3840 x 2160)@60fps'
+              thumbnailImageUrl: 'https://www.vodafone.co.uk/cs/groups/public/documents/images/vfcon088401.jpg'
+              actions:
+                  - 
+                    type: postback
+                    label: J2
+                    payload:
+                        type: j2
+    showJ5:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy J5
+              text: 'OS : Android O (8.0)
+                    Battery Type and Size :3,500 mAh
+                    Water-resistant : Yes
+                    Wireless Charging Capability : Yes
+                    Camera resolution (Front): 8MP AF (F1.7)
+                    Camera resolution (Rear) : 12MP OIS (F1.5/F2.4)
+                    Internal Memory          : 4GB RAM / 256GB Storage'
+              thumbnailImageUrl: 'https://i.gadgets360cdn.com/products/large/1519585112_635_samsung_galaxy_s9_plus_grey.jpg'
+              actions:
+                  - 
+                    type: postback
+                    label: Galaxy J5
+                    payload:
+                        type: j5
+    showJ7:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy j7
+              text: Galaxy J7 Edge
+              thumbnailImageUrl: 'https://images.samsung.com/is/image/samsung/id-galaxy-s7-black-128gb-sm-g935ftkdxid-front-black-mist-thumb-61272217?$PF_PRD_PNG$'
+              actions:
+                  - 
+                    type: postback
+                    label: Galaxy J7 
+                    payload:
+                        type: j7
 
+    #showA
+    showA5:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy A5
+              text: 'Main Display Resolution : 2960 x 1440 (Quad HD+)
+                    Camera resolution (Front): 8MP AF (F1.7)
+                    Camera resolution (Rear) : 12MP OIS (F1.5/F2.4)
+                    Internal Memory          : 4GB RAM / 256GB Storage
+                    Video Recording Resolution: UHD 4K (3840 x 2160)@60fps'
+              thumbnailImageUrl: 'https://www.vodafone.co.uk/cs/groups/public/documents/images/vfcon088401.jpg'
+              actions:
+                  - 
+                    type: postback
+                    label: Galaxy A5
+                    payload:
+                        type: a5
+    showA7:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy A7
+              text: 'OS : Android O (8.0)
+                    Battery Type and Size :3,500 mAh
+                    Water-resistant : Yes
+                    Wireless Charging Capability : Yes
+                    Camera resolution (Front): 8MP AF (F1.7)
+                    Camera resolution (Rear) : 12MP OIS (F1.5/F2.4)
+                    Internal Memory          : 4GB RAM / 256GB Storage'
+              thumbnailImageUrl: 'https://i.gadgets360cdn.com/products/large/1519585112_635_samsung_galaxy_s9_plus_grey.jpg'
+              actions:
+                  - 
+                    type: postback
+                    label: Galaxy A7
+                    payload:
+                        type: a7
+    showA8:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy A8
+              text: Galaxy A8
+              thumbnailImageUrl: 'https://images.samsung.com/is/image/samsung/id-galaxy-s7-black-128gb-sm-g935ftkdxid-front-black-mist-thumb-61272217?$PF_PRD_PNG$'
+              actions:
+                  - 
+                    type: postback
+                    label: Galaxy A8
+                    payload:
+                        type: a8
+
+    #showNote
+    showNote5:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy Note 5
+              text: 'Main Display Resolution : 2960 x 1440 (Quad HD+)
+                    Camera resolution (Front): 8MP AF (F1.7)
+                    Camera resolution (Rear) : 12MP OIS (F1.5/F2.4)
+                    Internal Memory          : 4GB RAM / 256GB Storage
+                    Video Recording Resolution: UHD 4K (3840 x 2160)@60fps'
+              thumbnailImageUrl: 'https://www.vodafone.co.uk/cs/groups/public/documents/images/vfcon088401.jpg'
+              actions:
+                  - 
+                    type: postback
+                    label: Galaxy Note 5
+                    payload:
+                        type: note5
+    
+    showNote7:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy Note 7
+              text: 'OS : Android O (8.0)
+                    Battery Type and Size :3,500 mAh
+                    Water-resistant : Yes
+                    Wireless Charging Capability : Yes
+                    Camera resolution (Front): 8MP AF (F1.7)
+                    Camera resolution (Rear) : 12MP OIS (F1.5/F2.4)
+                    Internal Memory          : 4GB RAM / 256GB Storage'
+              thumbnailImageUrl: 'https://i.gadgets360cdn.com/products/large/1519585112_635_samsung_galaxy_s9_plus_grey.jpg'
+              actions:
+                  - 
+                    type: postback
+                    label: Galaxy Note 7
+                    payload:
+                        type: note7
+    
+    showNote8:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy Note 8
+              text: Galaxy Note 8
+              thumbnailImageUrl: 'https://images.samsung.com/is/image/samsung/id-galaxy-s7-black-128gb-sm-g935ftkdxid-front-black-mist-thumb-61272217?$PF_PRD_PNG$'
+              actions:
+                  - 
+                    type: postback
+                    label: Galaxy Note 8
+                    payload:
+                        type: note8
+        
+    

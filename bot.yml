@@ -12,6 +12,6 @@ nlus: $include(./nlus.yml)
 # methods: {}
 # config: {}
 version: 0.0.1
-id:
+id: 13ab89eb-28c1-4ee2-bc13-958f25f4db95
 tag: null
 

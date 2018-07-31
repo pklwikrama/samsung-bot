@@ -41,6 +41,9 @@ askLocation:
             - tanggerang
             - tngrng
             - tngrang
+        Jakarta:
+            - djakarta
+            - jakarta
 
 askProduct:
   type: keyword
@@ -50,13 +53,14 @@ askProduct:
               - galaxy s
               - galaxyS
               - glx s
-              -galaksi s
+              - galaksi s
               
           Samsung Galaxy Note:
               - samsung note
+              - S note
 
           Samsung Galaxy J:
               - samsung j
           
           Samsung Galaxy A:
-              - samsung galaxt a
+              - samsung galaxy a

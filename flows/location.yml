@@ -15,7 +15,7 @@ states:
         condition: "intent == giveLocation"
   giveButton:
     action: buttonshareloc
-    transitions: {}
+    transitions: 
   allLocation: 
     action: locationOption
     transitions:
