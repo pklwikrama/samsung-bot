@@ -1,4 +1,6 @@
 intents:
+  locationChoosen:
+
   giveLocation:
     initial: true
     type: text
@@ -6,7 +8,72 @@ intents:
       nlu: askLocation      
 
 states:
-  AskLocation:
-    initial: true
-    
+  askLocation:
+    action: askLocation
+    transitions:
+      locationInfo:
+        condition: "intent == giveLocation"
+  giveButton:
+    action: buttonshareloc
+    transitions: {}
+  allLocation: 
+    action: locationOption
+    transitions:
+      location:
+        condition:
+
+actions:
+  askLocation:
+    type: text
+    options:
+      text: "Dimana lokasi anda?"
+  shareLocation:
+    type: template
+    options:
+        type: text
+        items:
+          text: 'Kamu bisa klik tombol dibawah untuk share lokasi kamu!'
+          quickreply:
+            - type: location
+  # buttonshareloc:
+  #   type: template
+  #   options: 
+  #     type: button
+  #     items: 
+  #       title: shareloc
+  #       text: 'Kamu bisa klik tombol dibawah untuk share lokasi kamu!'
+  #       actions:
+  #         -
+  #           type: url
+  #           label: Share lokasi
+  #           url: ''
+  locationOption:
+    type: template
+    options:
+      type: carousel
+      items:
+        - 
+          title: 
+          thumbnailImageUrl: ''
+          actions: 
+            -
+              type: url
+              label: Detail
+              url: ''
+        -
+          title: 
+          thumbnailImageUrl: ''
+          actions: 
+            -
+              type: url
+              label: Detail
+              url: ''
+        -
+          title: 
+          thumbnailImageUrl: ''
+          actions: 
+            -
+              type: url
+              label: Detail
+              url: ''
   

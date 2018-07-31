@@ -1,12 +1,17 @@
 product:
-    active: true
-    intents:
-        productChoosen:
-            type: data
-            initial: true
-            fallback: false
-            classifier:
-                nlu: askProduct
+active: true
+intents:
+    toProduct:
+        initial: true
+        type: command
+        condition: "content == 'toProduct'"
+    askProduct:
+        type: data
+        initial: true
+        fallback: false
+        classifier:
+            nlu: askProduct
+    
 states:
     showProduct:
         action:
@@ -14,11 +19,24 @@ states:
             - name: askOption
         transition:
             productDetail:
-                condition: 'intent == "productChosen"'
+                condition: 'payload.type = "product"'
             showProduct:
                 fallback: true
+    
+    productDetail:
+        action:
+            - name: showDetail
+            - name: toProduct
+        transition: 
+            productInfo: 'payload.type = "productDetail"'
+            productDetail:
+                fallback: true
+            
 
 action:
+    askOption:
+        type: text
+        text: "Silahkan klik produk yang ingin anda lihat detailnya."
     productOption:
       type: template
       option:
@@ -26,7 +44,7 @@ action:
         items:
             - title: Galaxy S
               text: Galaxy S
-              thumbnailImageUrl: 'image.samsung.com/us/smartphones/galaxy-s9/phone-pcd/0216-C2-1-GalaxyS-PhonesPCD.jpg'
+              thumbnailImageUrl: 'https://images.samsung.com/is/image/samsung/p5/global/mkt/unpacked201802/pcdpfs/smartphone-galaxy-star-type4.png?$ORIGIN_PNG$'
               actions:
                   - 
                     type: postback
@@ -37,7 +55,7 @@ action:
 
             - title: Galaxy Note
               text: Galaxy Note
-              thumbnailImageUrl: 'image.samsung.com/us/smartphones/galaxy-s9/phone-pcd/0216-C2-2-GalaxyNote-PhonesPCD.jpg'
+              thumbnailImageUrl: 'https://images.samsung.com/is/image/samsung/p5/global/mkt/unpacked201708/pcd/smartphones-galaxy-great-black.png?$ORIGIN_PNG$'
               actions:
                   - 
                     type: postback
@@ -46,9 +64,20 @@ action:
                         type: product
                         product: Galaxy Note
 
+            - title: Galaxy A
+              text: galaxy a
+              thumbnailImageUrl: 'https://images.samsung.com/is/image/samsung/p5/id/mobile/smartphone-galaxy-pcd-a-series-mobile.png?$ORIGIN_PNG$'
+              actions:
+                  - 
+                    type: postback
+                    label: galaxy a
+                    payload:
+                        type: product
+                        product: Galaxy A
+
             - title: Galaxy J
-              text: Galaxy J
-              thumbnailImageUrl: ''
+              text: galaxy j
+              thumbnailImageUrl: 'https://images.samsung.com/is/image/samsung/p5/id/mobile/smartphone-galaxy-pcd-j-series-mobile.png?$ORIGIN_PNG$'
               actions:
                   - 
                     type: postback
@@ -56,16 +85,50 @@ action:
                     payload:
                         type: product
                         product: Galaxy J
-
-            - title: Galaxy A
-              text: Galaxy S
+    showDetailS:
+      type: template
+      option:
+        type: carousel
+        items:
+            - title: Galaxy S9
+              text: Galaxy S9
               thumbnailImageUrl: ''
               actions:
                   - 
                     type: postback
-                    label: galaxy s
+                    label: Galaxy S9
                     payload:
                         type: product
-                        product: Galaxy S
+                        product: Galaxy S9
 
+            - title: Galaxy S9+
+              text: Galaxy S9+
+              thumbnailImageUrl: ''
+              actions:
+                  - 
+                    type: postback
+                    label: Galaxy S9+
+                    payload:
+                        type: product
+                        product: Galaxy S9+
+
+            - title: Galaxy S7 Edge
+              text: Galaxy S7 Edge
+              thumbnailImageUrl: ''
+              actions:
+                  - 
+                    type: postback
+                    label: Galaxy S7 Edge
+                    payload:
+                        type: product
+                        product: Galaxy S7 Edge
+        
+    done:
+        type: text
+        options:
+            text: "Berikut spesifikasi dari handphone ${payload.type} :"
+    toFallback: 
+        type: command
+        options:
+            command: toFallback
 

@@ -21,7 +21,9 @@ states:
                 fallback: true
         initial: true
     sayHi:
-        action: sayHi
+        action: 
+            - sayHi
+            - chooseOption
         transitions: {}
         end: true
     fallback:
@@ -33,8 +35,46 @@ actions:
         type: text
         options:
             text: 'Hai! Selamat datang di Samsung store premium, ada yang bisa saya bantu ?'
+    chooseOption:
+        type: template
+        options:
+            type: carousel 
+            items:
+                - 
+                    title: Product
+                    text: Product
+                    thumbnailImageUrl: ''
+                    actions:
+                        - 
+                            type: postback
+                            label: Product
+                            payload:
+                                type: 
+                - 
+                    title: Comparison
+                    text: Comparison
+                    thumbnailImageUrl: ''
+                    actions:
+                        - 
+                            type: postback
+                            label: Comparison
+                            payload:
+                                type: 
+                -
+                    title: Location
+                    text: Location
+                    thumbnailImageUrl: ''
+                    actions:
+                        - 
+                            type: postback
+                            label: Location
+                            payload:
+                                type: 
+                 
+
+        
     fallback:
         type: text
         options:
-            text: 'Maaf saya tidak mengerti maksud anda'
+            text: 'Maaf saya tidak mengerti maksud anda, Ada yang bisa saya bantu?'
 methods: {}
